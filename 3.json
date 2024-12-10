@@ -1,0 +1,30 @@
+
+[
+    {
+     $group: {
+       _id: "$title",
+       imdbRating: {
+         $avg: "$imdb.rating"
+       },
+       commentCount:{
+         $sum: "$num_mflix_comments"
+       }
+     }
+    },
+    {
+      $sort: {
+        "imdbRating": -1
+      }
+    },{
+      $limit: 5
+    },
+    {
+      "$project": {
+        "title": "$_id",
+        "_id": 0,
+        "imdbRating": 1,
+        "commentCount": 1
+      }
+    }
+  ]
+  
